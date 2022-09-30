@@ -15,6 +15,8 @@ def build_parser():
     parser.add_argument(
         "--tmax", type=int, required=True, help="you need to define t_max"
     )
+    parser.add_argument("--x0", default=0, type=int, help="node to start")
+    parser.add_argument("--xf", default=7, type=int, help="node to finish")
     parser.add_argument(
         "--print",
         action="store_true",
@@ -24,8 +26,6 @@ def build_parser():
     parser.add_argument(
         "--csv_path", default="graph.csv", type=str, help="path to your csv file"
     )
-    parser.add_argument("--x0", default=0, type=int, help="node to start")
-    parser.add_argument("--xf", default=7, type=int, help="node to finish")
     return parser
 
 
@@ -100,11 +100,12 @@ def main(args):
         next_states = set()
 
     x_path = get_optimal_path(graph, opt_table, args.xf)
-    print(
-        "Optimal cost for given T_min and T_max is {}".format(
-            np.min(opt_table[args.tmin : args.tmax, args.xf])
-        )
+    f_min = (
+        np.min(opt_table[args.tmin, args.xf])
+        if args.tmin == args.tmax
+        else np.min(opt_table[args.tmin : args.tmax, args.xf])
     )
+    print("Optimal cost for given T_min and T_max is {}".format(f_min))
     print("Optimal path for an agent is: ", end="")
     print(*x_path[::-1], sep=" -> ")
 
