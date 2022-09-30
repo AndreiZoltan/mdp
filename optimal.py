@@ -4,32 +4,32 @@ import numpy as np
 
 from prettytable import PrettyTable
 
-from typing import Callable, List
+from typing import Callable
 
 
-def build_parser():
-    parser = argparse.ArgumentParser(prog="python optimal.py")
-    parser.add_argument(
+def build_parser() -> argparse.ArgumentParser:
+    argparser = argparse.ArgumentParser(prog="python optimal.py")
+    argparser.add_argument(
         "--tmin", type=int, required=True, help="you need to define t_min"
     )
-    parser.add_argument(
+    argparser.add_argument(
         "--tmax", type=int, required=True, help="you need to define t_max"
     )
-    parser.add_argument("--x0", default=0, type=int, help="node to start")
-    parser.add_argument("--xf", default=7, type=int, help="node to finish")
-    parser.add_argument(
+    argparser.add_argument("--x0", default=0, type=int, help="node to start")
+    argparser.add_argument("--xf", default=7, type=int, help="node to finish")
+    argparser.add_argument(
         "--print",
         action="store_true",
         required=False,
         help="print pretty table for you",
     )
-    parser.add_argument(
-        "--csv_path", default="graph.csv", type=str, help="path to your csv file"
+    argparser.add_argument(
+        "--path", default="graph.csv", type=str, help="path to your csv file"
     )
-    return parser
+    return argparser
 
 
-def func(func_expr: str) -> Callable:
+def func(func_expr: str) -> Callable[[int], float]:
     """
     parse string expression and return c function
     :param func_expr: expression of transition function
@@ -40,7 +40,7 @@ def func(func_expr: str) -> Callable:
         def __init__(self, ast_):
             self.ast = ast_
 
-        def __call__(self, t):
+        def __call__(self, t: int):
             return eval(ast)
 
     ast = compile(func_expr, "<string>", "eval")
@@ -77,7 +77,7 @@ def get_optimal_path(graph: DiGraph, table: np.array, x_f: int) -> list:
 
 def main(args):
     graph_table = np.genfromtxt(
-        args.csv_path, delimiter=",", dtype="str", skip_header=False
+        args.path, delimiter=",", dtype="str", skip_header=False
     )
     graph = DiGraph()
     create_graph(graph_table[1:], graph)
@@ -105,9 +105,6 @@ def main(args):
         if args.tmin == args.tmax
         else np.min(opt_table[args.tmin : args.tmax, args.xf])
     )
-    print("Optimal cost for given T_min and T_max is {}".format(f_min))
-    print("Optimal path for an agent is: ", end="")
-    print(*x_path[::-1], sep=" -> ")
 
     if args.print:
         table = PrettyTable()
@@ -119,8 +116,11 @@ def main(args):
         )
         print(table)
 
+    print("Optimal cost for given T_min and T_max is {}".format(f_min))
+    print("Optimal path for an agent is: ", end="")
+    print(*x_path[::-1], sep=" -> ")
+
 
 if __name__ == "__main__":
     parser = build_parser()
-    args = parser.parse_args()
-    main(args)
+    main(parser.parse_args())
