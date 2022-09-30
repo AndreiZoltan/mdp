@@ -1,0 +1,9 @@
+0,1,2,3,4,5,6,7
+nan,2*t,nan,1,nan,nan,3*t,nan
+nan,nan,nan,nan,nan,3*t,nan,nan
+t+1,2*t,nan,nan,nan,nan,nan,5*t
+nan,nan,5,nan,3,nan,nan,nan
+t+2,nan,nan,nan,nan,nan,t+8,nan
+nan,nan,3*t-1,nan,8*t,nan,t+5,4*t
+nan,nan,nan,nan,nan,nan,nan,7*t
+nan,3*t,nan,nan,7*t,nan,nan,nan
