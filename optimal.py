@@ -88,7 +88,7 @@ def main(args):
     for t in range(1, args.tmax + 1):
         opt_table = np.append(opt_table, np.full((1, n_nodes), np.inf), axis=0)
         for state in states:
-            next_states.update(set(graph.successors(state)))
+            next_states.update(graph.successors(state))
             for successor in graph.successors(state):
                 opt_table[-1, successor] = min(
                     opt_table[-2, state] + graph[state][successor]["c"](t - 1),
