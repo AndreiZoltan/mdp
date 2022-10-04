@@ -10,10 +10,10 @@ from typing import Callable
 def build_parser() -> argparse.ArgumentParser:
     argparser = argparse.ArgumentParser(prog="python optimal.py")
     argparser.add_argument(
-        "--tmin", type=int, required=True, help="you need to define t_min"
+        "--tmin", type=int, default=5, help="the minimal time from which the cost is calculated"
     )
     argparser.add_argument(
-        "--tmax", type=int, required=True, help="you need to define t_max"
+        "--tmax", type=int, default=10, help="the maximum time until which the cost is calculated"
     )
     argparser.add_argument("--x0", default=0, type=int, help="node to start")
     argparser.add_argument("--xf", default=7, type=int, help="node to finish")
@@ -56,7 +56,7 @@ def create_graph(graph_table: np.array, graph: DiGraph) -> None:
     """
     for i in range(graph_table.shape[0]):
         for j in range(graph_table.shape[1]):
-            if not graph_table[i, j] == "nan":
+            if graph_table[i, j] != "nan":
                 graph.add_edge(i, j, c=func(graph_table[i, j]))
 
 
@@ -65,9 +65,7 @@ def get_optimal_path(graph: DiGraph, table: np.array, x_f: int) -> list:
     last = x_f
     for t in range(table.shape[0] - 1, 0, -1):
         for predecessor in graph.predecessors(last):
-            if table[t][last] == table[t - 1][predecessor] + graph[predecessor][last][
-                "c"
-            ](t - 1):
+            if table[t][last] == table[t - 1][predecessor] + graph[predecessor][last]["c"](t - 1):
                 path.append(predecessor)
                 last = predecessor
                 break
@@ -103,7 +101,7 @@ def main(args):
     f_min = (
         np.min(opt_table[args.tmin, args.xf])
         if args.tmin == args.tmax
-        else np.min(opt_table[args.tmin : args.tmax, args.xf])
+        else np.min(opt_table[args.tmin: args.tmax, args.xf])
     )
 
     if args.print:
