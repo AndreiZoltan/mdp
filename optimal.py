@@ -1,14 +1,12 @@
-import argparse
+from argparse import ArgumentParser
 from networkx import DiGraph
 import numpy as np
 
 from prettytable import PrettyTable
 
-from typing import Callable
 
-
-def build_parser() -> argparse.ArgumentParser:
-    argparser = argparse.ArgumentParser(prog="python optimal.py")
+def build_parser() -> ArgumentParser:
+    argparser = ArgumentParser(prog="python optimal.py")
     argparser.add_argument(
         "--tmin", type=int, default=5, help="the minimal time from which the cost is calculated"
     )
@@ -29,41 +27,26 @@ def build_parser() -> argparse.ArgumentParser:
     return argparser
 
 
-def func(func_expr: str) -> Callable[[int], float]:
-    """
-    parse string expression and return c function
-    :param func_expr: expression of transition function
-    :return: c function
-    """
+class TransitionCost:
+    def __init__(self, func_expr: str):
+        self.ast = compile(func_expr, "<string>", "eval")
 
-    class TransitionCost:
-        def __init__(self, ast_):
-            self.ast = ast_
-
-        def __call__(self, t: int):
-            return eval(ast)
-
-    ast = compile(func_expr, "<string>", "eval")
-    return TransitionCost(ast)
+    def __call__(self, t):
+        return eval(self.ast)
 
 
 def create_graph(graph_table: np.array, graph: DiGraph) -> None:
-    """
-    builds graph from table data
-    :param graph_table:
-    :param graph:
-    :return:
-    """
     for i in range(graph_table.shape[0]):
         for j in range(graph_table.shape[1]):
             if graph_table[i, j] != "nan":
-                graph.add_edge(i, j, c=func(graph_table[i, j]))
+                graph.add_edge(i, j, c=TransitionCost(graph_table[i, j]))
 
 
-def get_optimal_path(graph: DiGraph, table: np.array, x_f: int) -> list:
+def get_optimal_path(graph: DiGraph, table: np.array, x_f: int, f_min: int) -> list:
     path = [x_f]
     last = x_f
-    for t in range(table.shape[0] - 1, 0, -1):
+    t_f = np.where(table[:, x_f] == f_min)[0][0]
+    for t in range(t_f, 0, -1):
         for predecessor in graph.predecessors(last):
             if table[t][last] == table[t - 1][predecessor] + graph[predecessor][last]["c"](t - 1):
                 path.append(predecessor)
@@ -97,12 +80,12 @@ def main(args):
         states = next_states
         next_states = set()
 
-    x_path = get_optimal_path(graph, opt_table, args.xf)
     f_min = (
         np.min(opt_table[args.tmin, args.xf])
         if args.tmin == args.tmax
         else np.min(opt_table[args.tmin: args.tmax, args.xf])
     )
+    x_path = get_optimal_path(graph, opt_table, args.xf, f_min)
 
     if args.print:
         table = PrettyTable()
