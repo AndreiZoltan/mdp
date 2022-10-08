@@ -8,6 +8,7 @@
 ## Solution for the finite-time
 
 The solution for the finite-time discrete optimal control problem with functions that describe dynamics of the analytical data system.
+Files for this task are stores in Lab1.
 ```
 usage: python optimal.py [-h] [--tmin TMIN] [--tmax TMAX] [--x0 X0] [--xf XF] [--print] [--path PATH]
 
@@ -24,7 +25,7 @@ options:
 ## Solution for the infinite-time
 
 The solution for the infinite-time discrete optimal control problem with functions that describe dynamics of the analytical data system.
-
+Files for this task are stores in Lab2.
 ```
 usage: python optimal.py [-h] [--path PATH] [--eps EPS]
 
