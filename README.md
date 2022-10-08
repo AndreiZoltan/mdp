@@ -1,8 +1,8 @@
 # mdp
 
 # Table of contents
-1. [Solution for the finite-time](#Solution for the finite-time)
-2. [Solution for the infinite-time](#Solution for the infinite-time)
+1. [Solution for the finite-time](#Solution-for-the-finite-time)
+2. [Solution for the infinite-time](#Solution-for-the-infinite-time)
 
 
 ## Solution for the finite-time
