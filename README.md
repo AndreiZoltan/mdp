@@ -1,8 +1,8 @@
 # mdp
 
 # Table of contents
-1. [Solution for the finite-time](#Solution-for-the-finite-time)
-2. [Solution for the infinite-time](#example2)
+1. [Solution for the finite-time](#Solution for the finite-time)
+2. [Solution for the infinite-time](#Solution for the infinite-time)
 
 
 ## Solution for the finite-time
@@ -25,7 +25,7 @@ options:
 
 The solution for the infinite-time discrete optimal control problem with functions that describe dynamics of the analytical data system.
 
-```commandline
+```
 usage: python optimal.py [-h] [--path PATH] [--eps EPS]
 
 options:
