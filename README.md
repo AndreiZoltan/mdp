@@ -1,4 +1,12 @@
 # mdp
+
+# Table of contents
+1. [Solution for the finite-time](#Solution-for-the-finite-time)
+2. [Solution for the infinite-time](#example2)
+
+
+## Solution for the finite-time
+
 The solution for the finite-time discrete optimal control problem with functions that describe dynamics of the analytical data system.
 ```
 usage: python optimal.py [-h] [--tmin TMIN] [--tmax TMAX] [--x0 X0] [--xf XF] [--print] [--path PATH]
@@ -11,4 +19,17 @@ options:
   --xf XF      node to finish
   --print      print pretty table for you
   --path PATH  path to your csv file
+```
+
+## Solution for the infinite-time
+
+The solution for the infinite-time discrete optimal control problem with functions that describe dynamics of the analytical data system.
+
+```commandline
+usage: python optimal.py [-h] [--path PATH] [--eps EPS]
+
+options:
+  -h, --help   show this help message and exit
+  --path PATH  path to your csv file
+  --eps EPS    epsilon to reset small values
 ```
