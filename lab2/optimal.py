@@ -12,7 +12,7 @@ def build_parser() -> ArgumentParser:
         "--path", default="graph.csv", type=str, help="path to your csv file"
     )
     argparser.add_argument(
-        "--eps", default="1e-6", type=float, help="epsilon to reset small values"
+        "--print", help="print cost table", required=False, action="store_true"
     )
     return argparser
 
@@ -25,7 +25,8 @@ def create_graph(graph_table: np.array, graph: DiGraph) -> None:
                 graph.add_edge(i, j, c=float(c), t=float(t))
 
 
-def get_optimal_path(cycle: DiGraph, x: np.array, z_edge: np.array) -> list:
+def get_optimal_path(x: np.array, z_edge: np.array) -> list:
+    cycle = DiGraph()
     path = list()
     for edge in np.argwhere(x > 0):
         cycle.add_edge(*z_edge[edge][0])
@@ -47,7 +48,6 @@ def main(args):
     graph = DiGraph()
     create_graph(graph_table[1:], graph)
 
-    cycle = DiGraph()
     n_edges = graph.number_of_edges()
     n_nodes = graph.number_of_nodes()
     z = np.empty((n_edges,))
@@ -65,15 +65,17 @@ def main(args):
             a_ub[adj_n, i] = -1
             a_eq[0, i] = datadict["t"]
             i += 1
-    solution = linprog(z, A_ub=a_ub, b_ub=b_ub, A_eq=a_eq, b_eq=b_eq, bounds=(0, None))
+    solution = linprog(
+        z, A_ub=a_ub, b_ub=b_ub, A_eq=a_eq, b_eq=b_eq, bounds=(0, None), method="highs"
+    )
     fval = solution["fun"]
     x = np.array(solution["x"])
-    x[abs(x) < args.eps] = 0.0
-    x_path = get_optimal_path(cycle, x, z_edges)
+    x_path = get_optimal_path(x, z_edges)
     table = PrettyTable()
     table.field_names = np.array(["cost", "from node", "to node"])
     table.add_rows(np.append(np.expand_dims(np.round(x, 3), axis=1), z_edges, axis=1))
-    print(table)
+    if args.print:
+        print(table)
     print("Optimal average cost for infinity is {}".format(np.round(fval, 3)))
     print("Optimal path for an agent is: ", end="")
     print(*x_path, sep=" -> ")
