@@ -28,12 +28,12 @@ The solution for the infinite-time discrete optimal control problem
 with functions that describe dynamics of the analytical data system.
 Files for this task are stores in lab2.
 ```
-usage: python optimal.py [-h] [--path PATH] [--eps EPS]
+usage: python optimal.py [-h] [--path PATH] [--print]
 
 options:
   -h, --help   show this help message and exit
   --path PATH  path to your csv file
-  --eps EPS    epsilon to reset small values
+  --print      print cost table
 ```
 
 ## Solution for the infinite-time stochastic problem
