@@ -4,7 +4,7 @@
 1. [Solution for the finite-time](#Solution-for-the-finite-time)
 2. [Solution for the infinite-time](#Solution-for-the-infinite-time)
 3. [Solution for the infinite-time stochastic problem](#Solution-for-the-infinite-time-stochastic-problem)
-4. [Reduction of the MDP to a stochastic discrete optimal control](#Reduction-of-the-to-a-stochastic-discrete-optimal-control)
+4. [Reduction of the MDP to a stochastic discrete optimal control](#Reduction-of-the-MDP-to-a-stochastic-discrete-optimal-control)
 
 ## Solution for the finite-time
 
