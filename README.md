@@ -4,6 +4,7 @@
 1. [Solution for the finite-time](#Solution-for-the-finite-time)
 2. [Solution for the infinite-time](#Solution-for-the-infinite-time)
 3. [Solution for the infinite-time stochastic problem](#Solution-for-the-infinite-time-stochastic-problem)
+4. [Reduction of the MDP to a stochastic discrete optimal control](#Reduction-of-the-to-a-stochastic-discrete-optimal-control)
 
 ## Solution for the finite-time
 
@@ -44,4 +45,13 @@ options:
   -h, --help   show this help message and exit
   --path PATH  path to your csv file
   --print      print cost table
+```
+
+## Reduction of the MDP to a stochastic discrete optimal control
+```
+usage: python optimal.py [-h] [--path PATH]
+
+options:
+  -h, --help   show this help message and exit
+  --path PATH  path to your csv file
 ```
