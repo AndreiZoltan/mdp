@@ -35,16 +35,19 @@ def main(args):
             for j in range(n):
                 graph_table2[n + i * a + k, j] = c2(graph_table[k * n + i, j])
     graph_table2 = np.vstack([np.arange(n + n * a), graph_table2])
-    np.savetxt("{}/{}".format(path, "temp.csv"), graph_table2, delimiter=";", fmt="%s")
+    t_file = "temp.csv"
+    np.savetxt("{}/{}".format(path, t_file), graph_table2, delimiter=";", fmt="%s")
     subprocess.run(
         [
             "python",
             "{}/{}/{}".format(ppath, "lab3", "optimal.py"),
             "--path",
-            "{}/{}".format(path, "temp.csv"),
+            "{}/{}".format(path, t_file),
             "--print",
         ]
     )
+    file = pathlib.Path("{}/{}".format(path, t_file))
+    file.unlink()
 
 
 if __name__ == "__main__":
