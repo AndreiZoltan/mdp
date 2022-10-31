@@ -17,7 +17,7 @@ def build_parser() -> ArgumentParser:
 
 def c2(s: str) -> str:
     data = s.split(",")
-    data[-1] = str(2 * int(data[-1]))
+    data[-1] = str(2 * float(data[-1]))
     return ",".join(data)
 
 
