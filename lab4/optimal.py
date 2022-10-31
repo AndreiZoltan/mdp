@@ -28,10 +28,8 @@ def main(args):
 
     graph_table2 = np.full((n + n * a, n + n * a), "nan", dtype=object)
     for i in range(n):
-        for j in range(a):
-            graph_table2[i, n + i * a + j] = "0"
-    for k in range(a):
-        for i in range(n):
+        for k in range(a):
+            graph_table2[i, n + i * a + k] = "0"
             for j in range(n):
                 graph_table2[n + i * a + k, j] = c2(graph_table[k * n + i, j])
     graph_table2 = np.vstack([np.arange(n + n * a), graph_table2])
