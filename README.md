@@ -5,6 +5,8 @@
 2. [Solution for the infinite-time](#Solution-for-the-infinite-time)
 3. [Solution for the infinite-time stochastic problem](#Solution-for-the-infinite-time-stochastic-problem)
 4. [Reduction of the MDP to a stochastic discrete optimal control](#Reduction-of-the-MDP-to-a-stochastic-discrete-optimal-control)
+5. [Solution for the stochastic discrete optimal control with discount](#Solution-for-the-stochastic-discrete-optimal-control-with-discount)
+6. [Solution for the discounted Markov decision problem](#Solution-for-the-discounted-Markov-decision-problem)
 
 ## Solution for the finite-time
 
@@ -54,4 +56,26 @@ usage: python optimal.py [-h] [--path PATH]
 options:
   -h, --help   show this help message and exit
   --path PATH  path to your csv file
+```
+
+## Solution for the stochastic discrete optimal control with discount
+```
+usage: python optimal.py [-h] [--x0 X0] [--gamma GAMMA] [--path PATH] [--print]
+
+options:
+  -h, --help     show this help message and exit
+  --x0 X0        node to start
+  --gamma GAMMA  gamma discount
+  --path PATH    path to your csv file
+  --print        print cost table
+```
+
+## Solution for the discounted Markov decision problem
+```
+usage: python optimal.py [-h] [--gamma GAMMA] [--path PATH]
+
+options:
+  -h, --help     show this help message and exit
+  --gamma GAMMA  gamma discount
+  --path PATH    path to your csv file
 ```
