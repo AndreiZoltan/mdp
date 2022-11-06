@@ -59,6 +59,10 @@ options:
 ```
 
 ## Solution for the stochastic discrete optimal control with discount
+In this section we will examine the stochastic discrete 
+optimal control
+problem over infinite time intervals and with the discounted 
+summary cost optimization criterion.
 ```
 usage: python optimal.py [-h] [--x0 X0] [--gamma GAMMA] [--path PATH] [--print]
 
