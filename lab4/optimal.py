@@ -1,10 +1,8 @@
 from argparse import ArgumentParser
+from tempfile import NamedTemporaryFile
+from pathlib import Path
 import numpy as np
 import subprocess
-import pathlib
-
-path = pathlib.Path(__file__).parent.resolve()
-ppath = pathlib.Path(__file__).parent.parent.resolve()
 
 
 def build_parser() -> ArgumentParser:
@@ -33,19 +31,19 @@ def main(args):
             for j in range(n):
                 graph_table2[n + i * a + k, j] = c2(graph_table[k * n + i, j])
     graph_table2 = np.vstack([np.arange(n + n * a), graph_table2])
-    t_file = "temp.csv"
-    np.savetxt("{}/{}".format(path, t_file), graph_table2, delimiter=";", fmt="%s")
+    ppath = Path(__file__).parent.parent.resolve()
+    t_file = NamedTemporaryFile(mode="w", dir=".")
+    np.savetxt(t_file.name, graph_table2, delimiter=";", fmt="%s")
     subprocess.run(
         [
             "python",
             "{}/{}/{}".format(ppath, "lab3", "optimal.py"),
             "--path",
-            "{}/{}".format(path, t_file),
+            t_file.name,
             "--print",
         ]
     )
-    file = pathlib.Path("{}/{}".format(path, t_file))
-    file.unlink()
+    t_file.close()
 
 
 if __name__ == "__main__":
